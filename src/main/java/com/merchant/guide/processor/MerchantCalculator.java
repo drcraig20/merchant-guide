@@ -107,6 +107,13 @@ public class MerchantCalculator {
     }
 
     private void verifyQuestion(String input) {
+        String[] inputArr = input.split(" ");
+        if (inputArr.length < 2){
+            throw new IllegalArgumentException();
+        }
 
+        String intergalacticDigit = inputArr[inputArr.length -3];
+        if (!intergalacticDigitCache.containsKey(intergalacticDigit))
+            throw  new IllegalArgumentException();
     }
 }
