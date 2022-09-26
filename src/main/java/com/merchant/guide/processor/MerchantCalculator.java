@@ -136,7 +136,7 @@ public class MerchantCalculator {
 
     private void verifyQuestion(String input) {
         String[] inputArr = input.split(" ");
-        if (inputArr.length < 2){
+        if (inputArr.length < 3){
             throw new IllegalArgumentException();
         }
 
