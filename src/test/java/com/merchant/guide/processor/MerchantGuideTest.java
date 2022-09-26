@@ -1,5 +1,6 @@
 package com.merchant.guide.processor;
 
+import com.merchant.guide.MerchantGuide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,16 +10,11 @@ import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MerchantProcessorTest {
-
-    MerchantProcessor processor;
-    InputStream in;
-    PrintStream out;
+public class MerchantGuideTest {
     ByteArrayOutputStream byteArrayOutputStream;
 
     @BeforeEach
     void setup(){
-        this.processor = new MerchantProcessor();
 
         String inputText = """
                 > glob is I
@@ -37,16 +33,15 @@ public class MerchantProcessorTest {
                 EOL
                 """;
 
-        this.in = new ByteArrayInputStream(inputText.getBytes());
+        System.setIn(new ByteArrayInputStream(inputText.getBytes()));
 
         this.byteArrayOutputStream = new ByteArrayOutputStream();
-        this.out = new PrintStream(byteArrayOutputStream);
+        System.setOut(new PrintStream(byteArrayOutputStream));
     }
 
     @Test
-    @DisplayName("Validate calling of processInput")
-    void testProcessInput_thenExpectValidResponse(){
-
+    @DisplayName("Validate calling of main method")
+    void testMainMethod_thenExpectValidResponse(){
         String actualOutputTest = """
                 ### Test Output:
                 > pish tegj glob glob is 42
@@ -55,7 +50,7 @@ public class MerchantProcessorTest {
                 > glob prok Iron is 782 Credits
                 > I have no idea what you are talking about""";
 
-        processor.processInput(in, out);
+        MerchantGuide.main(new String[0]);
 
         String outputText = byteArrayOutputStream.toString();
         outputText = outputText.replaceFirst("### Test Input:", "").trim();
@@ -63,22 +58,8 @@ public class MerchantProcessorTest {
         assertEquals(actualOutputTest, outputText.trim());
     }
 
-    @Test
-    @DisplayName("Validate calling of printResult")
-    void testPrintResult_thenExpectValidResponse(){
-        String actualOutputTest = "### Test Output:";
-
-        processor.printResult(out);
-
-        String outputText = byteArrayOutputStream.toString();
-
-        assertEquals(actualOutputTest.trim(), outputText.trim());
-    }
-
     @AfterEach
     void destroy() throws IOException {
-        in.close();
-        out.close();
         byteArrayOutputStream.close();
     }
 }
