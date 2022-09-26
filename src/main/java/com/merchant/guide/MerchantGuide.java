@@ -5,6 +5,6 @@ import com.merchant.guide.processor.MerchantProcessor;
 public class MerchantGuide {
     public static void main(String[] args) {
         MerchantProcessor processor = new MerchantProcessor();
-        processor.processInput();
+        processor.processInput(System.in,System.out);
     }
 }
