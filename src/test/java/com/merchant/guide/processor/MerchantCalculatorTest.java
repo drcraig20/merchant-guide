@@ -46,7 +46,7 @@ public class MerchantCalculatorTest {
         calculator.getIntergalacticDigitCache().put("glob", "I");
         String input = "how many Credits is glob Silver ?";
         String response = calculator.processQuestion(input);
-        assertEquals("glob Silver is 50 Credits", response);
+        assertEquals("> glob Silver is 50 Credits", response);
     }
 
     @Test
