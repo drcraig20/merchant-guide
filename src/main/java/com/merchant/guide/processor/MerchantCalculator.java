@@ -57,7 +57,21 @@ public class MerchantCalculator {
     }
 
     private int extractRomanNumberToInteger(String[] inputArr){
-        return 0;
+        StringBuilder romanNumberBuilder = new StringBuilder();
+
+        int index = 0;
+        while (intergalacticDigitCache.containsKey(inputArr[index])){
+            /*
+             * assumes that there is no more intergalactic digit in the string anymore
+             * which also works that way in real life
+             */
+            romanNumberBuilder.append(intergalacticDigitCache.get(inputArr[index]));
+            index++;
+        }
+
+        String romanNumber = romanNumberBuilder.toString();
+
+        return romanNumberToInteger(romanNumber);
     }
 
     private String[] getValidInput(String input, String delimiter){
@@ -75,6 +89,17 @@ public class MerchantCalculator {
     }
 
     public void computeMetalCost(String input){
+        String[] inputArr = input.split(" ");
+
+        int numberOfMetals = extractRomanNumberToInteger(inputArr);
+
+        float totalCostOfMetal = Float.parseFloat(inputArr[inputArr.length-2]);
+
+        float pricePerMetal = totalCostOfMetal / numberOfMetals;
+
+        String metalName = inputArr[inputArr.length-4];
+
+        metalPriceCache.put(metalName, pricePerMetal);
     }
 
     public String processQuestion(String input) {
