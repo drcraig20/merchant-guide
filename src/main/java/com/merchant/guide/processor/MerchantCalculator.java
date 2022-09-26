@@ -103,7 +103,35 @@ public class MerchantCalculator {
     }
 
     public String processQuestion(String input) {
-        return "";
+        verifyQuestion(input);
+
+        String[] validInputArr = getValidInput(input, " is ");  //this reduces the number of loops to perform on the input
+
+        int totalNumberOfMetal = extractRomanNumberToInteger(validInputArr);
+
+        StringBuilder response = new StringBuilder();
+        for (int i = 0; i < validInputArr.length-1; i++){
+            response.append(validInputArr[i]).append(" ");
+        }
+
+        String metalName = validInputArr[validInputArr.length-2];
+
+        boolean containsKey = metalPriceCache.containsKey(metalName);
+
+        response.append("is ");
+
+        if (containsKey){
+            float priceOfMetal = metalPriceCache.get(metalName);
+            float credits = priceOfMetal * totalNumberOfMetal;
+
+            response.append((int) credits);
+        }
+        else response.append(totalNumberOfMetal);
+
+        if (containsKey)
+            response.append(" Credits");
+
+        return "> " + response;
     }
 
     private void verifyQuestion(String input) {
