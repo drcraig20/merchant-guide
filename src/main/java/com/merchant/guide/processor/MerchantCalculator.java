@@ -39,7 +39,21 @@ public class MerchantCalculator {
     }
 
     private int romanNumberToInteger(String romanString) {
-        return 0;
+        int sum =0;
+        for (int i = 0; i < romanString.length(); i++){
+            char charAt = romanString.charAt(i);
+            int digit = getRomanValue(charAt); // constant time retrieval
+            if (i != romanString.length()-1){
+                int afterDigit = getRomanValue(romanString.charAt(i+1)); // constant time retrieval
+
+                if (digit < afterDigit){
+                    sum -= digit;
+                }
+                else sum += digit;
+            }
+            else sum += digit;
+        }
+        return sum;
     }
 
     private int extractRomanNumberToInteger(String[] inputArr){
